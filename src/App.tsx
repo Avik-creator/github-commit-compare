@@ -14,6 +14,15 @@ interface GitHubData {
   total: { [key: string]: number };
 }
 
+interface CustomError extends Error {
+  response?: {
+    status: number;
+  };
+  config?: {
+    url: string;
+  };
+}
+
 function App(): JSX.Element {
   const [myUserName, setMyUserName] = useState<string>("");
   const [comparerUserInput, setComparerUserInput] = useState<string>("");
@@ -63,8 +72,8 @@ function App(): JSX.Element {
       setMyName(myGitHubInfo?.name || myUserName);
       setComparerData(comparerProfileData);
       setComparerName(comparerGitHubInfo?.name || comparerUserInput);
-    } catch (error: any) {
-      if (error.response && error.response.status === 404) {
+    } catch (error: CustomError | any) {
+      if (error.response && error?.response.status === 404) {
         if (error.config.url.includes(myUserName)) {
           setMyError("Username not found");
         } else if (error.config.url.includes(comparerUserInput)) {
