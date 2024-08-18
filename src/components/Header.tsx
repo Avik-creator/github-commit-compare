@@ -1,4 +1,16 @@
-export function Header({ myData, comparerData, clearDataCallBack }) {
+import { GitHubData } from "../App";
+
+interface HeaderProps {
+  myData: GitHubData | null;
+  comparerData: GitHubData | null;
+  clearDataCallBack: () => void;
+}
+
+export function Header({
+  myData,
+  comparerData,
+  clearDataCallBack,
+}: HeaderProps) {
   const handleDataClear = () => {
     clearDataCallBack();
   };

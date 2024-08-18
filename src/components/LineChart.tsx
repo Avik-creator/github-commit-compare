@@ -18,7 +18,7 @@ ChartJS.register(
   BarElement,
   PointElement,
   LineElement,
-  Tooltip,
+  Tooltip
 );
 
 interface ContributionData {
@@ -38,7 +38,7 @@ interface LineChartProps {
 
 export function LineChart({ myData, comparerData, userNames }: LineChartProps) {
   const [myContributions, setMyContributions] = useState<(number | null)[]>(
-    Object.values(myData),
+    Object.values(myData)
   );
   const [comparerContributions, setComparerContributions] = useState<
     (number | null)[]
@@ -46,7 +46,7 @@ export function LineChart({ myData, comparerData, userNames }: LineChartProps) {
 
   const getUserYearsforLabel = (
     myData: ContributionData,
-    comparerData: ContributionData,
+    comparerData: ContributionData
   ): string[] => {
     const myYears = Object.keys(myData);
     const comparerYears = Object.keys(comparerData);
@@ -58,12 +58,12 @@ export function LineChart({ myData, comparerData, userNames }: LineChartProps) {
   useEffect(() => {
     const maxLength = Math.max(
       myContributions.length,
-      comparerContributions.length,
+      comparerContributions.length
     );
 
     const padArray = (
       arr: (number | null)[],
-      length: number,
+      length: number
     ): (number | null)[] => {
       const padding = Array(length - arr.length).fill(null);
       return [...padding, ...arr];
@@ -87,7 +87,7 @@ export function LineChart({ myData, comparerData, userNames }: LineChartProps) {
         borderColor: "#63FF60",
         pointBackgroundColor: "#fff",
         pointBorderColor: "#fff",
-        pointWidth: 5,
+        // pointWidth: 5,
         pointRadius: 5,
         borderWidth: 4,
       },
@@ -97,7 +97,7 @@ export function LineChart({ myData, comparerData, userNames }: LineChartProps) {
         borderColor: "#FFE55B",
         pointBackgroundColor: "#fff",
         pointBorderColor: "#fff",
-        pointWidth: 5,
+        // pointWidth: 5,
         pointRadius: 5,
         borderWidth: 4,
       },

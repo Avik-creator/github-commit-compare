@@ -6,11 +6,11 @@ import { GetGitHubInfo, GetProfileData } from "./APIs/GetProfileData";
 import { Container } from "./components/Container";
 import { Header } from "./components/Header";
 import { ButtonArrow } from "./assets/buttonArrow";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, TargetAndTransition } from "framer-motion";
 import html2canvas from "html2canvas";
 import { Loader } from "./components/Loader";
 
-interface GitHubData {
+export interface GitHubData {
   total: { [key: string]: number };
 }
 
@@ -41,6 +41,14 @@ function App(): JSX.Element {
   const [comparerError, setComparerError] = useState<string>("");
   const headingContainer = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+
+  const animateProps: TargetAndTransition = {
+    "--x": "68%",
+    "--y": haveData ? "62%" : "100%",
+    "--color1": "rgba(74,178,1,1)",
+    "--color2": haveData ? "rgba(0,0,0,1)" : "rgba(0,0,0,0)",
+    "--position2": haveData ? "50%" : "0%",
+  } as any;
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -89,7 +97,7 @@ function App(): JSX.Element {
 
   const getMemeIndex = (
     myContribution: number,
-    comparerContribution: number,
+    comparerContribution: number
   ): number => {
     if (myContribution === 0 && comparerContribution === 0) {
       return 0;
@@ -133,19 +141,19 @@ function App(): JSX.Element {
 
       const myTotalContribution = arrOfMyContri.reduce(
         (total, curVal) => total + curVal,
-        0,
+        0
       );
       setMyTotalContribution(myTotalContribution);
 
       const comparerTotalContribution = arrOfComparerContri.reduce(
         (total, curVal) => total + curVal,
-        0,
+        0
       );
       setComparertotalContri(comparerTotalContribution);
 
       const memeIndex = getMemeIndex(
         myTotalContribution,
-        comparerTotalContribution,
+        comparerTotalContribution
       );
       setMemeIndex(memeIndex);
       const myfirstName = myName.split(" ")[0];
@@ -182,8 +190,8 @@ function App(): JSX.Element {
       ? "34px"
       : "52px"
     : isMobile
-      ? "44px"
-      : "68px";
+    ? "44px"
+    : "68px";
 
   const clearDataCallBack = () => {
     setMyData(null);
@@ -200,13 +208,7 @@ function App(): JSX.Element {
   return (
     <motion.main
       className="body-container h-full"
-      animate={{
-        "--x": "68%",
-        "--y": haveData ? "62%" : "100%",
-        "--color1": "rgba(74,178,1,1)",
-        "--color2": haveData ? "rgba(0,0,0,1)" : "rgba(0,0,0,0)",
-        "--position2": haveData ? "50%" : "0%",
-      }}
+      animate={animateProps}
       transition={transition}
     >
       <Container className="h-full pt-7 font-sans">
